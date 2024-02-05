@@ -349,9 +349,9 @@ module NetworkAnalysis
             plot!(rat_m_p, m_cc_len, m_edgs, xscale=:log10, yscale=:log10, color=colors2[i], markershape=markers[i], line=false, grid=false, label="", markersize=m_sizes[i], xtickfont=Plots.font(13), ytickfont=Plots.font(13))
             xs = range(1, 2000, length=10);
             ys = (10^b)*xs.^k;
-            plot!(rat_m_p, xs, ys, label="α = $k", color=colors2[i])
+            plot!(rat_m_p, xs, ys, label=legends[i]*" (α = $k)", color=colors2[i], legendfontsize=15, legend=:bottomright)
             #b, k, rat_m_p = Regression_from_2_arrays(m_cc_len, m_edgs, ((m_cc_len .> 5)), rat_m_p, [1, 2000], comp="log", color=colors2[i])
-            #savefig("./pics/comps_nodes_edges_SD.pdf")
+            #savefig("./pics/WORM_comps_nodges.pdf")
         end
         
         display(cc_p)
@@ -780,9 +780,12 @@ module ApeLineage
             end
         end
         out_arr = sort(out_arr)
+        if length(out_arr) == 0
+            return []
+        end
         if comp == "all"
             return out_arr
-        elseif comp == "restrict" 
+        elseif comp == "restrict"
             #perc = Int(round(length(out_arr)*0.05)) + 1
             q25, q75 = quantile!(out_arr, 0.25), quantile!(out_arr, 0.75)
             iq = q75 - q25
