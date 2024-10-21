@@ -4,7 +4,7 @@ All scripts and notebooks needed to analyze segmental duplications (SDs) from a 
 
 ## The command line tool ##
 
-***predict_MST.jl*** emsp This script allows one to construct the network of segmental duplications and distinguish primary from secondary duplications in it. The script can be run in 3 possible modes:
+***predict_MST.jl*** &ensp; This script allows one to construct the network of segmental duplications and distinguish primary from secondary duplications in it. The script can be run in 3 possible modes:
 - without the filtering (default) (***-f 0 -k 0***).
 - when all edges with matching breakpoints ("suspicious" edges) are excluded from the MST (***-f 1 -k 0***).
 - when edges with matching breakpoints are excluded except for those proximal to assembly gaps (***-f 1 -k 1 --gaps_file gaps_annotation.bed***).
