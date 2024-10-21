@@ -37,10 +37,6 @@ NOTE: The assembly gap annotation for the _hg38_ can be found at ***inputs/hg38_
 
 &nbsp; 
 
-&nbsp;
-
-&nbsp;
-
 
 ## Jupyter notebooks ##
 
