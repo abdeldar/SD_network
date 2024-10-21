@@ -59,7 +59,8 @@ def plot_shifts_repeats(dfs, col_name, ax_in, sides, comp1="all", comp2="all", c
         elif comp2 == "big":
             df = df[df["jumps"] > 3]
         arr = np.append(arr, sum(df[col_name])/(2*len(df[col_name])))
-    ax_in.plot(range(-5, len(arr)-5), arr, color=col_in, linewidth=2, linestyle='-', marker='o', markersize=4)
+    ax_in.plot(range(-5, len(arr)-15), arr[:-10], color=col_in, linewidth=2, linestyle='-', marker='o', markersize=4)
+    ax_in.plot(range(len(arr)-15, len(arr)-5), arr[-10:], color=col_in, linewidth=0, linestyle='-', marker='o', markersize=4, label='_nolegend_')
     y_min, y_max = ax_in.get_ylim()
     rect = Rectangle((-15, -0.1), 15.5, y_max + 0.2, linewidth=0, facecolor='cornflowerblue', alpha=0.3, label='_nolegend_')
     ax_in.add_patch(rect)
@@ -68,7 +69,8 @@ def plot_shifts_repeats(dfs, col_name, ax_in, sides, comp1="all", comp2="all", c
     rect = Rectangle((30.5, -0.1), 15, y_max + 0.2, linewidth=0, facecolor='lightgrey', alpha=0.9, label='_nolegend_')
     ax_in.add_patch(rect)
     ax_in.set_xlim(-5.2, 40.2)
-    ax_in.set_ylim(y_min, y_max) 
+    ax_in.set_ylim(y_min, y_max)
+
 
 
 def plot_several_repeats(pieces, repeat_names, titles, subplots_size, figure_size, sides, comp1="all", comp2="all"):
@@ -80,16 +82,15 @@ def plot_several_repeats(pieces, repeat_names, titles, subplots_size, figure_siz
             ax.axis('off')
         else:
             ax.set_yscale('log')
-            ax.set_title(titles[i], fontsize=24)
-            ax.set_xticks([-5, 0, 5, 10, 15, 20, 25, 30, 35, 40])
+            ax.set_title(titles[i], fontsize=22)
+            ax.set_xticks([-5, 0, 5, 10, 15, 20, 25, 30])
             ax.tick_params(axis='x', labelsize=16)
             ax.tick_params(axis='y', labelsize=13, which="both")
             plot_shifts_repeats(pieces, repeat_names[i], ax, sides, comp1="noNs", comp2=comp2, col_in="tab:orange")
             plot_shifts_repeats(pieces, repeat_names[i], ax, sides, comp1=comp1, comp2=comp2, col_in="tab:blue")
-            #handles, legends = ax.get_legend_handles_labels()
-            #print(legends)
-            #order = [0, 2, 1, 3, 4]
             ax.legend(['without gaps', 'all duplicated'], loc='lower center', fontsize=11, frameon=False)
+    fig.text(0.5, 0.055, 'genomic windows (*50 bps)', ha='center', va='center', fontsize=22)
+    fig.text(0.055, 0.5, 'frequency', ha='center', va='center', rotation='vertical', fontsize=22)
     fig.show()
 
 
