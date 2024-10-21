@@ -1,10 +1,10 @@
 # SD network tools
 
-All scripts and notebooks needed to analyze segmental duplications (SDs) from a complex networks point of view are here.
+All scripts and notebooks needed to analyze segmental duplications (SDs) from a complex network point of view are here.
 
 ## The command line tool ##
 
-***predict_MST.jl***: This script allows one to construct the network of segmental duplications and distinguish primary from secondary duplications in it. The script can be run in 3 possible modes:
+***predict_MST.jl***:   This script allows one to construct the network of segmental duplications and distinguish primary from secondary duplications in it. The script can be run in 3 possible modes:
 - without the filtering (default) (***-f 0 -k 0***).
 - when all edges with matching breakpoints ("suspicious" edges) are excluded from the MST (***-f 1 -k 0***).
 - when edges with matching breakpoints are excluded except for those proximal to assembly gaps (***-f 1 -k 1 --gaps_file gaps_annotation.bed***).
@@ -24,16 +24,16 @@ Pkg.instantiate()
 Example runs:
 
 ```
-julia --project=. predict_MST.jl -k 1 --f 1 --N=10 --input_SDs ./inputs/GRCh38GenomicSuperDup_sort.tab -g ./inputs/hg38_assembly_all_gaps_wsex.bed
+julia --project=. predict_MST.jl --help
 
 julia --project=. predict_MST.jl -k 0 --f 0 --input_SDs ./inputs/GRCh38GenomicSuperDup_sort.tab
 
-julia --project=. predict_MST.jl --help
+julia --project=. predict_MST.jl -k 1 --f 1 --N=10 --input_SDs ./inputs/GRCh38GenomicSuperDup_sort.tab -g ./inputs/hg38_assembly_all_gaps_wsex.bed
 ```
 
-Only ***-i / --input_SDs*** argument which points to the list of SDs file is obligatory. One can find the list of _hg38_ SDs at ***./inputs/GRCh38GenomicSuperDup_sort.tab***
+Only ***-i*** argument which points to the list of SDs file is obligatory. One can find the list of _hg38_ segmental duplications at ***./inputs/GRCh38GenomicSuperDup_sort.tab***.
 
-NOTE: The assembly gap annotation for the _hg38_ can be found at ***./inputs/hg38_assembly_all_gaps_wsex.bed***. For other gemnomes use another file.
+NOTE: The assembly gap annotation for the _hg38_ can be found at ***./inputs/hg38_assembly_all_gaps_wsex.bed***. For other gemnomes use another input annotations.
 
 
 ## Jupyter notebooks ##
