@@ -34,8 +34,13 @@ julia --project=. predict_MST.jl -k 1 --f 1 --N=10 --input_SDs ./inputs/GRCh38Ge
 Only ***-i*** argument which points to the list of SDs file is obligatory. One can find the list of _hg38_ segmental duplications at ***inputs/GRCh38GenomicSuperDup_sort.tab***.
 
 NOTE: The assembly gap annotation for the _hg38_ can be found at ***inputs/hg38_assembly_all_gaps_wsex.bed***. For other gemnomes use another input annotations.
+
 &nbsp; 
+
 &nbsp;
+
+&nbsp;
+
 
 ## Jupyter notebooks ##
 
