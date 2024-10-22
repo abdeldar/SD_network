@@ -13,17 +13,15 @@ All scripts and notebooks needed to analyze segmental duplications (SDs) from a 
 
 One can run the script only if Julia is installed.
 
-To activate the Julia environment:
+To instantiate the Julia environment:
 
-```julia
-using Pkg
-Pkg.activate(".")
-Pkg.instantiate()
+```bash
+julia --project=. -e 'import Pkg; Pkg.instantiate()'
 ```
 
 Example runs:
 
-```
+```bash
 julia --project=. predict_MST.jl --help
 
 julia --project=. predict_MST.jl -k 0 --f 0 --input_SDs ./inputs/GRCh38GenomicSuperDup_sort.tab
