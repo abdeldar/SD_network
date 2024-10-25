@@ -203,10 +203,10 @@ module NetworkAnalysis
             vert1 = mg[over1[1].value, :id]
             vert2 = mg[over2[1].value, :id]
             
-            if has_edge(mg, Edge(vert1, vert2)) && (vert1 != vert2)
+            if (Edge(vert1, vert2) in edges(mg)) && (vert1 != vert2)
                 edges_double[(get_prop(mg, vert1, :id), get_prop(mg, vert2, :id))] = get(edges_double, (get_prop(mg, vert1, :id), get_prop(mg, vert2, :id)), 0) + 1
                 #edges_ident[(get_prop(mg, vert1, :id), get_prop(mg, vert2, :id))] = max(edges_ident[(get_prop(mg, vert1, :id), get_prop(mg, vert2, :id))], line[:identity])
-            elseif !has_edge(mg, Edge(vert1, vert2)) && (vert1 != vert2)
+            elseif !(Edge(vert1, vert2) in edges(mg)) && (vert1 != vert2)
                 add_edge!(mg, vert1, vert2)
                 edges_ident[(get_prop(mg, vert1, :id), get_prop(mg, vert2, :id))] = line[:identity]
             end
