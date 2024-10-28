@@ -51,6 +51,7 @@ def l_and_r_2_both(df_in):
 def plot_shifts_repeats(dfs, col_name, ax_in, sides, comp1="all", comp2="all", col_in="tab:blue"):
     arr = np.array([])
     for df in dfs:
+        df = df[df["CG_frac_in"] != 0]
         if comp1 == "noNs":
             df = df[df["gaps"] == 0]
         
@@ -125,8 +126,7 @@ def breakpoints_enrichment(piece_out, pieces, mode="normal"):
     cg_frac = piece_out.pop('CG_frac')
     piece_out.insert(23, 'CG_frac', cg_frac)
     cols = np.array(piece_out.columns[7:])
-    cols = list(filter(lambda x: not x in ["intra_frac", "Retroposon", "Satellite", "rRNA", 
-                                "snRNA", "scRNA", "srpRNA", "tRNA", "RC", "telocent_dist", "jumps"], cols))
+    cols = list(filter(lambda x: not x in ["intra_frac", "Retroposon", "Satellite", "rRNA", "snRNA", "scRNA", "srpRNA", "tRNA", "RC", "telocent_dist", "jumps"], cols))
     for colname in cols:
         if colname in ["genes", "cpgisl_in", "repli_in", "repli_deriv", "recomb_in", "dnase_in", "CG_frac_in", "CG_frac"]:
             norm_coef = 1

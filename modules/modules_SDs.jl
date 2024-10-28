@@ -158,7 +158,7 @@ end
 
 module NetworkAnalysis
     
-    using LightGraphs, MetaGraphs, IntervalTrees, DataFrames, Main.SDmoduleInit, GraphPlot, StatsBase
+    using Graphs, MetaGraphs, IntervalTrees, DataFrames, Main.SDmoduleInit, GraphPlot, StatsBase
     using Colors, Compose, Plots, Histograms, GLM, Statistics, HypothesisTests, Distributions, ArndtLabTheme
     using LaTeXStrings
     pyplot()
@@ -493,7 +493,7 @@ end
                                                            
 module PyrSDTypes
     
-    using StatsBase, Statistics, DataFrames, Histograms, Plots, MetaGraphs, LightGraphs, StatsPlots, GLM, Main.SDmoduleInit, Main.NetworkAnalysis, DecisionTree, Random, ArndtLabTheme
+    using StatsBase, Statistics, DataFrames, Histograms, Plots, MetaGraphs, Graphs, StatsPlots, GLM, Main.SDmoduleInit, Main.NetworkAnalysis, DecisionTree, Random, ArndtLabTheme
     pyplot()
     theme(:arndtlab)
                                                             
@@ -1048,9 +1048,9 @@ end
                                                                                                 
 module MST_from_SD
 
-    using DataFrames, Main.SDmoduleInit, LightGraphs, MetaGraphs, SparseArrays, GraphPlot, Distributions, Histograms, Statistics, StatsBase, Plots
+    using DataFrames, Main.SDmoduleInit, Graphs, MetaGraphs, SparseArrays, GraphPlot, Distributions, Histograms, Statistics, StatsBase, Plots
     
-    export graph_nosec_from_graph, assign_weights_edges!, wrapper_MST, filt_unneeded, test_sharpness_distribution
+    export graph_nosec_from_graph, assign_weights_edges!, wrapper_MST, filt_unneeded, test_sharpness_distribution, check_if_in_MST
 
 
     function modify_adj_matrix(graph::MetaGraph)
@@ -1089,7 +1089,7 @@ module MST_from_SD
                 end
                 neis2 = neighbors(graph, n)
                 mat_inds = findall(x -> x in neis, neis2)
-                if LightGraphs.weights(graph)[i, n] == 1.0
+                if Graphs.weights(graph)[i, n] == 1.0
                     if comp == "normal"
                         wei = 1.001 - (length(mat_inds) + 1)/length(neis)
                     elseif (comp == "normal_noise") | (comp == "sharp_out")
@@ -1102,19 +1102,19 @@ module MST_from_SD
                     set_prop!(graph, i, n, :weight, wei)
                 else
                     if comp == "normal"
-                        wei = minimum([1.001 - (length(mat_inds) + 1)/length(neis), LightGraphs.weights(graph)[i, n]])
+                        wei = minimum([1.001 - (length(mat_inds) + 1)/length(neis), Graphs.weights(graph)[i, n]])
                     elseif comp == "normal_noise"
-                        wei = minimum([1.001 - (length(mat_inds) + 1)/length(neis), LightGraphs.weights(graph)[i, n]]) + rand(Uniform(-0.00005, 0.00005))
+                        wei = minimum([1.001 - (length(mat_inds) + 1)/length(neis), Graphs.weights(graph)[i, n]]) + rand(Uniform(-0.00005, 0.00005))
                     elseif comp == "sharp_out"
                         if (Edge(i, n) in suspicious_edges) | (Edge(n, i) in suspicious_edges)
                             wei = 100.0
                         else
-                            wei = minimum([1.001 - (length(mat_inds) + 1)/length(neis), LightGraphs.weights(graph)[i, n]]) + rand(Uniform(-0.00005, 0.00005))
+                            wei = minimum([1.001 - (length(mat_inds) + 1)/length(neis), Graphs.weights(graph)[i, n]]) + rand(Uniform(-0.00005, 0.00005))
                         end
                     elseif comp == "betweenness_weight"
-                        wei = minimum([1.001 - bws[n]/sum_bws, LightGraphs.weights(graph)[i, n]])
+                        wei = minimum([1.001 - bws[n]/sum_bws, Graphs.weights(graph)[i, n]])
                     elseif comp == "shuffle"
-                        wei = minimum([1.001 + rand(), LightGraphs.weights(graph)[i, n]])
+                        wei = minimum([1.001 + rand(), Graphs.weights(graph)[i, n]])
                     end
                     set_prop!(graph, i, n, :weight, wei)
                 end
@@ -1286,13 +1286,32 @@ module MST_from_SD
         return val, out_lis
     end
 
+
+    function check_if_in_MST(mg, mg_orig, edg_lis)
+        my_dict = Dict()
+        lis_out = []
+        for i in vertices(mg_orig)
+            my_dict[get_prop(mg_orig, i, :id)] = i
+        end
+        for edge in edges(mg)
+            fr, to = get_prop(mg, edge.src, :id), get_prop(mg, edge.dst, :id)
+            edge_new = Edge(my_dict[fr], my_dict[to])
+            if edge_new in edg_lis
+                append!(lis_out, 2)
+            else
+                append!(lis_out, 1)
+            end
+        end
+        return lis_out
+    end
+
 end
 
 ##########################################################################################
 
 module Annotate_SDs
 
-    using DataFrames, Main.SDmoduleInit, LightGraphs, MetaGraphs, DataFramesGenomics, Printf, Statistics
+    using DataFrames, Main.SDmoduleInit, Graphs, MetaGraphs, DataFramesGenomics, Printf, Statistics
     
     export Read_genes_and_gaps_2_DF, Read_repli_recomb_dnase_2_DF, Read_repeats_2_DF, construct_DF!, go_thru_repeat_overlaps!, go_thru_thru!, add_all_columns!, modify_dfs_gaps!, modify_dfs_means!, main_modification, finzalize_df_cols!, GC_flanks_measure!
 

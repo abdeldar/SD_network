@@ -1,4 +1,5 @@
 using DataFrames
+using Graphs
 
 include("./modules/modules_scr.jl")
 
