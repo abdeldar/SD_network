@@ -38,11 +38,11 @@ NOTE: The assembly gap annotation for the _hg38_ can be found at ***inputs/hg38_
 
 ## Jupyter notebooks ##
 
-Jupyter notebooks needed to reproduce results from [this paper](https://doi.org/10.1186/s12864-021-07789-7) are in **SD_network_analysis** and **Grow_network_simulations** folders.
+Jupyter notebooks needed to reproduce results from [this paper](https://doi.org/10.1186/s12864-021-07789-7) are in **./old_notebooks/SD_network_analysis** and **./old_notebooks/Grow_network_simulations** folders.
 
-**Grow_network_simulations**: The SD network construction, parameters fitting, analysis of overalps between SDs and CNVs and analysis of the SD network characteristics (***main_SDs_4git.ipynb***).
+**./old_notebooks/SD_network_analysis**: The SD network construction, parameters fitting, analysis of overalps between SDs and CNVs and analysis of the SD network characteristics (***main_SDs_4git.ipynb***).
 
-**Grow_network_simulations**: Simulations of network growth copying models (UCM and PCM) and parameters fitting (***net_simul_4git.ipynb***).
+**./old_notebooks/Grow_network_simulations**: Simulations of network growth copying models (UCM and PCM) and parameters fitting (***net_simul_4git.ipynb***).
 
 
 All jupyter notebooks needed to reproduce results from [another publication](https://doi.org/10.1101/2023.03.18.533287) are in the following folders: ***SD_jump_models*** and ***Analyze_SD_breakpoints***.
