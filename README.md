@@ -11,15 +11,16 @@ All scripts and notebooks needed to analyze segmental duplications (SDs) from a 
 
 **Quick Run:**
 
-One can run the script only if Julia is installed.
+The script is written in [Julia](https://julialang.org). To download and install Julia visit [this page](https://julialang.org/downloads/).
 
-To instantiate the Julia environment:
+To download all used packages and instantiate the Julia environment run:
 
 ```bash
 julia --project=. -e 'import Pkg; Pkg.instantiate()'
 ```
 
-Example runs:
+
+The script can thhen excuted like given here:
 
 ```bash
 julia --project=. predict_MST.jl --help
